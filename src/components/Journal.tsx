@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 const journalEntries = [
@@ -26,7 +27,7 @@ const journalEntries = [
   }
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -36,9 +37,9 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, x: -30, y: 10 },
-  visible: { opacity: 1, x: 0, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  visible: { opacity: 1, x: 0, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } }
 };
 
 export default function Journal() {
