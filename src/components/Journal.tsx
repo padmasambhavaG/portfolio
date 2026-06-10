@@ -7,7 +7,7 @@ const journalEntries = [
     title: "IIT Madras",
     role: "BS in Data Science",
     date: "2024 - Ongoing",
-    image: "/iitm-logo.png",
+    image: "iitm-logo.png",
     info: "CGPA: 8.84 / 10",
     link: "https://app.onlinedegree.iitm.ac.in/student/24F2003436"
   },
@@ -15,7 +15,7 @@ const journalEntries = [
     title: "Mohan Babu University",
     role: "B.Tech CSE",
     date: "2023 - 2027",
-    image: "/mbu-logo.jpg",
+    image: "mbu-logo.jpg",
     info: "CGPA: 9.29 / 10",
   },
   {
@@ -71,7 +71,7 @@ export default function Journal() {
             </p>
           </div>
           
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex group relative items-center justify-center rounded-full text-sm px-6 py-3 border-2 border-stroke bg-transparent text-text-primary hover:border-transparent transition-all w-fit">
+          <a href="resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex group relative items-center justify-center rounded-full text-sm px-6 py-3 border-2 border-stroke bg-transparent text-text-primary hover:border-transparent transition-all w-fit">
             <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
             <span className="absolute inset-[2px] bg-bg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
             <span className="flex items-center gap-2">View full resume <ArrowRight size={16} /></span>

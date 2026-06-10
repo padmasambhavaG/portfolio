@@ -9,28 +9,28 @@ gsap.registerPlugin(ScrollTrigger);
 const certifications = [
   {
     title: "IIT Madras - Data Science",
-    image: "/iitm-cert.png",
+    image: "iitm-cert.png",
     link: "https://drive.google.com/file/d/1qJz9X473QVIDkSOBSf9cmfcy0vu7TTQ5/view?usp=sharing"
   },
   {
     title: "Infosys Springboard - Internship 6.0 (TaxPal)",
-    image: "/infosys-springboard-cert.png",
+    image: "infosys-springboard-cert.png",
     link: "https://drive.google.com/file/d/19ptDfICdEwu6X9iYybyla1u3jGaEeyMv/view?usp=drive_link"
   },
   {
     title: "STEP Plus English Proficiency Test",
-    image: "/step-cert.png",
+    image: "step-cert.png",
     link: "https://drive.google.com/file/d/1DdBFPwxWSOfOzBDlsBqn2h8WOgrAqNT_/view?usp=sharing"
   },
   {
     title: "ServiceNow Certified System Administrator (CSA)",
-    image: "/servicenow-cert.png",
+    image: "servicenow-cert.png",
     link: "https://drive.google.com/file/d/1MDl9rXClVaSy8Kp7P-vlrR7XWOWNM4gT/view?usp=sharing",
     position: "left"
   },
   {
     title: "ServiceNow Certified Application Developer (CAD)",
-    image: "/servicenow-cad-cert.png",
+    image: "servicenow-cad-cert.png",
     link: "https://drive.google.com/file/d/1wy1th9R_naZ3BW9fnfGaYa-7Jke7ZJpe/view?usp=sharing",
     position: "left"
   }
