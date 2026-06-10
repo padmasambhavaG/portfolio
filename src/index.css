@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@theme {
+  --font-body: 'Inter', sans-serif;
+  --font-display: 'Instrument Serif', serif;
+
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-text-primary: var(--color-text-primary);
+  --color-muted: var(--color-muted);
+  --color-stroke: var(--color-stroke);
+  --color-accent: var(--color-accent);
+  
+  --color-glass-5: var(--color-glass-5);
+  --color-glass-10: var(--color-glass-10);
+  --color-glass-20: var(--color-glass-20);
+  
+  --animate-scroll-down: scroll-down 1.5s ease-in-out infinite;
+  --animate-role-fade-in: role-fade-in 0.4s ease-out;
+  --animate-gradient-shift: gradient-shift 6s ease infinite;
+
+  @keyframes scroll-down {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(200%); }
+  }
+  @keyframes role-fade-in {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+
+@layer utilities {
+  .accent-gradient {
+    background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+  }
+
+  .accent-gradient-text {
+    background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+
+  .hero-name-gradient-text {
+    background: linear-gradient(90deg, var(--color-text-primary) 0%, #89AACC 50%, var(--color-text-primary) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+
+  .hover-accent-gradient-text {
+    transition: color 0.5s ease, background 0.5s ease;
+  }
+  .hover-accent-gradient-text:hover {
+    background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .stats-number-gradient-text {
+    background: linear-gradient(90deg, #ffffff 0%, #89AACC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+
+  .group:hover .group-hover-accent-gradient-text {
+    background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@layer base {
+  :root {
+    /* LIGHT MODE (Default) */
+    --color-bg: hsl(0, 0%, 98%);
+    --color-surface: hsl(0, 0%, 95%);
+    --color-text-primary: hsl(0, 0%, 10%);
+    --color-muted: hsl(0, 0%, 45%);
+    --color-stroke: hsl(0, 0%, 85%);
+    --color-accent: hsl(0, 0%, 10%);
+    
+    /* Dark glass on light background */
+    --color-glass-5: rgba(0, 0, 0, 0.05);
+    --color-glass-10: rgba(0, 0, 0, 0.1);
+    --color-glass-20: rgba(0, 0, 0, 0.2);
+  }
+
+  .dark {
+    /* DARK MODE */
+    --color-bg: hsl(0, 0%, 4%);
+    --color-surface: hsl(0, 0%, 8%);
+    --color-text-primary: hsl(0, 0%, 96%);
+    --color-muted: hsl(0, 0%, 53%);
+    --color-stroke: hsl(0, 0%, 15%);
+    --color-accent: hsl(0, 0%, 96%);
+    
+    /* Light glass on dark background */
+    --color-glass-5: rgba(255, 255, 255, 0.05);
+    --color-glass-10: rgba(255, 255, 255, 0.1);
+    --color-glass-20: rgba(255, 255, 255, 0.2);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-glass-20);
+    border-radius: 10px;
+    border: 2px solid var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted);
+  }
+
+  /* Typography Hierarchy Resets */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-primary);
+  }
+}
