@@ -30,9 +30,26 @@ export function useBackgroundHlsVideo(
       playVideo();
     };
 
+    // User interaction fallback to trigger play (bypasses strict localhost autoplay policies)
+    const handleInteraction = () => {
+      if (video.paused) {
+        playVideo();
+      }
+      cleanupInteraction();
+    };
+
+    const cleanupInteraction = () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener('keydown', handleInteraction);
+    };
+
     video.muted = true;
     video.playsInline = true;
     video.addEventListener('canplay', retryPlayback, { once: true });
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('touchstart', handleInteraction);
+    document.addEventListener('keydown', handleInteraction);
 
     if (Hls.isSupported()) {
       hls = new Hls({
@@ -56,6 +73,7 @@ export function useBackgroundHlsVideo(
     return () => {
       video.removeEventListener('canplay', retryPlayback);
       video.removeEventListener('loadedmetadata', playVideo);
+      cleanupInteraction();
       hls?.destroy();
     };
   }, [enabled, videoRef]);
