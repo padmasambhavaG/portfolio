@@ -161,13 +161,13 @@ function HeatmapGraph({ variant }: { variant: 'github' | 'leetcode' }) {
         default: return 'bg-glass-5 border border-glass-5';
       }
     } else {
-      // LeetCode / Theme Blues
+      // LeetCode / Theme Blues (Light/Dark Mode responsive)
       switch (level) {
         case 0: return 'bg-glass-5 border border-glass-5';
-        case 1: return 'bg-[#89AACC]/40 border border-[#89AACC]/20';
-        case 2: return 'bg-[#89AACC]/60 border border-[#89AACC]/30';
-        case 3: return 'bg-[#89AACC]/80 border border-[#89AACC]/40';
-        case 4: return 'bg-text-primary border border-text-primary shadow-[0_0_10px_rgba(255,255,255,0.6)]';
+        case 1: return 'bg-[#89AACC]/30 border border-[#89AACC]/15 dark:bg-[#89AACC]/40 dark:border-[#89AACC]/20';
+        case 2: return 'bg-[#89AACC]/60 border border-[#89AACC]/30 dark:bg-[#89AACC]/60 dark:border-[#89AACC]/30';
+        case 3: return 'bg-[#4E85BF]/70 border border-[#4E85BF]/30 dark:bg-[#89AACC]/80 dark:border-[#89AACC]/40';
+        case 4: return 'bg-[#4E85BF] border border-[#4E85BF] shadow-[0_0_8px_rgba(78,133,191,0.4)] dark:bg-white dark:border-white dark:shadow-[0_0_10px_rgba(255,255,255,0.6)]';
         default: return 'bg-glass-5 border border-glass-5';
       }
     }
