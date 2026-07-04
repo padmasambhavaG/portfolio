@@ -39,6 +39,14 @@
     background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
   }
 
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
   .accent-gradient-text {
     background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
     -webkit-background-clip: text;

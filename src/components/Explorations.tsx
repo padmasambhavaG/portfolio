@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AnimatePresence, motion } from 'framer-motion';
-import { X, ExternalLink, Award } from 'lucide-react';
+import { X, ExternalLink, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,8 +38,8 @@ const certifications = [
 
 export default function Explorations() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const row1Ref = useRef<HTMLDivElement>(null);
-  const row2Ref = useRef<HTMLDivElement>(null);
+  const row1ContainerRef = useRef<HTMLDivElement>(null);
+  const row2ContainerRef = useRef<HTMLDivElement>(null);
   const [selectedCert, setSelectedCert] = useState<typeof certifications[0] | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -64,6 +64,22 @@ export default function Explorations() {
     setSelectedCert(cert);
   };
 
+  const scrollRow1 = (direction: 'left' | 'right') => {
+    const container = row1ContainerRef.current;
+    if (container) {
+      const scrollAmount = direction === 'left' ? -350 : 350;
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRow2 = (direction: 'left' | 'right') => {
+    const container = row2ContainerRef.current;
+    if (container) {
+      const scrollAmount = direction === 'left' ? -350 : 350;
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   // Handle ESC key and lock body scroll while modal is active
   useEffect(() => {
     if (selectedCert) {
@@ -85,41 +101,41 @@ export default function Explorations() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const container = containerRef.current;
-      const row1 = row1Ref.current;
-      const row2 = row2Ref.current;
-      if (!container || !row1 || !row2) return;
+      const row1Container = row1ContainerRef.current;
+      const row2Container = row2ContainerRef.current;
+      if (!container || !row1Container || !row2Container) return;
 
       const isMobile = window.innerWidth < 768;
-      // Faster, more pronounced translations
-      const moveDistance = isMobile ? "-450px" : "-950px";
-      const startOffset = isMobile ? "-450px" : "-950px";
+      // Snappy translation offsets on scroll
+      const moveDistance = isMobile ? 320 : 800;
+      const startOffset = isMobile ? 320 : 800;
 
-      // Row 1: moves to the left as user scrolls down
-      gsap.fromTo(row1,
-        { x: "0px" },
+      // Row 1: moves left on scroll down (animating scrollLeft from 0 to moveDistance)
+      gsap.fromTo(row1Container,
+        { scrollLeft: 0 },
         {
-          x: moveDistance,
+          scrollLeft: moveDistance,
           ease: "none",
           scrollTrigger: {
             trigger: container,
             start: "top bottom",
             end: "bottom top",
-            scrub: 0.5, // Faster, direct scroll tracking for premium feel
+            scrub: 0.5,
           }
         }
       );
 
-      // Row 2: moves to the right as user scrolls down
-      gsap.fromTo(row2,
-        { x: startOffset },
+      // Row 2: moves right on scroll down (animating scrollLeft from startOffset to 0)
+      gsap.fromTo(row2Container,
+        { scrollLeft: startOffset },
         {
-          x: "0px",
+          scrollLeft: 0,
           ease: "none",
           scrollTrigger: {
             trigger: container,
             start: "top bottom",
             end: "bottom top",
-            scrub: 0.5, // Faster, direct scroll tracking for premium feel
+            scrub: 0.5,
           }
         }
       );
@@ -145,64 +161,109 @@ export default function Explorations() {
         </h2>
       </div>
 
-      {/* Horizontal Scrolling Tracks */}
-      <div className="flex flex-col gap-6 md:gap-8 overflow-hidden w-full py-4 pointer-events-auto">
-        {/* Row 1: moves left (certificates in order 5, 1, 2, 3, 4) */}
-        <div 
-          ref={row1Ref} 
-          className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
-        >
-          {topRowCerts.map((cert, i) => (
-            <button 
-              onClick={() => handleSelectCert(cert)}
-              key={`row1-${i}`}
-              className="group relative w-[240px] md:w-[380px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/10 shadow-2xl cursor-pointer block text-left shrink-0 transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <img 
-                src={cert.image} 
-                alt={cert.title} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                style={{ objectPosition: cert.position || 'center' }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-5 md:p-8">
-                <span className="text-[10px] md:text-xs text-white/70 uppercase tracking-wider mb-1 font-mono truncate max-w-full">
-                  {cert.title}
-                </span>
-                <span className="font-display text-white text-lg md:text-2xl">
-                  View Certificate
-                </span>
-              </div>
-            </button>
-          ))}
+      {/* Horizontal Scrolling Tracks Wrapper */}
+      <div className="flex flex-col gap-6 md:gap-8 w-full py-4 pointer-events-auto relative">
+        
+        {/* Row 1 Container */}
+        <div className="relative group/row1 w-full">
+          {/* Scroll Left Button */}
+          <button 
+            onClick={() => scrollRow1('left')}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row1:opacity-100 duration-300"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          
+          <div 
+            ref={row1ContainerRef}
+            className="overflow-x-auto no-scrollbar scroll-smooth w-full"
+          >
+            <div className="flex gap-4 md:gap-6 px-6 md:px-16 w-max">
+              {topRowCerts.map((cert, i) => (
+                <button 
+                  onClick={() => handleSelectCert(cert)}
+                  key={`row1-${i}`}
+                  className="group relative w-[240px] md:w-[380px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/10 shadow-2xl cursor-pointer block text-left shrink-0 transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <img 
+                    src={cert.image} 
+                    alt={cert.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    style={{ objectPosition: cert.position || 'center' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-5 md:p-8">
+                    <span className="text-[10px] md:text-xs text-white/70 uppercase tracking-wider mb-1 font-mono truncate max-w-full">
+                      {cert.title}
+                    </span>
+                    <span className="font-display text-white text-lg md:text-2xl">
+                      View Certificate
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Scroll Right Button */}
+          <button 
+            onClick={() => scrollRow1('right')}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row1:opacity-100 duration-300"
+            aria-label="Scroll right"
+          >
+            <ChevronRight size={24} />
+          </button>
         </div>
 
-        {/* Row 2: moves right (certificates in order 3, 4, 5, 1, 2) */}
-        <div 
-          ref={row2Ref} 
-          className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
-        >
-          {bottomRowCerts.map((cert, i) => (
-            <button 
-              onClick={() => handleSelectCert(cert)}
-              key={`row2-${i}`}
-              className="group relative w-[240px] md:w-[380px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/10 shadow-2xl cursor-pointer block text-left shrink-0 transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <img 
-                src={cert.image} 
-                alt={cert.title} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                style={{ objectPosition: cert.position || 'center' }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-5 md:p-8">
-                <span className="text-[10px] md:text-xs text-white/70 uppercase tracking-wider mb-1 font-mono truncate max-w-full">
-                  {cert.title}
-                </span>
-                <span className="font-display text-white text-lg md:text-2xl">
-                  View Certificate
-                </span>
-              </div>
-            </button>
-          ))}
+        {/* Row 2 Container */}
+        <div className="relative group/row2 w-full">
+          {/* Scroll Left Button */}
+          <button 
+            onClick={() => scrollRow2('left')}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row2:opacity-100 duration-300"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          
+          <div 
+            ref={row2ContainerRef}
+            className="overflow-x-auto no-scrollbar scroll-smooth w-full"
+          >
+            <div className="flex gap-4 md:gap-6 px-6 md:px-16 w-max">
+              {bottomRowCerts.map((cert, i) => (
+                <button 
+                  onClick={() => handleSelectCert(cert)}
+                  key={`row2-${i}`}
+                  className="group relative w-[240px] md:w-[380px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/10 shadow-2xl cursor-pointer block text-left shrink-0 transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <img 
+                    src={cert.image} 
+                    alt={cert.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    style={{ objectPosition: cert.position || 'center' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-5 md:p-8">
+                    <span className="text-[10px] md:text-xs text-white/70 uppercase tracking-wider mb-1 font-mono truncate max-w-full">
+                      {cert.title}
+                    </span>
+                    <span className="font-display text-white text-lg md:text-2xl">
+                      View Certificate
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Scroll Right Button */}
+          <button 
+            onClick={() => scrollRow2('right')}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row2:opacity-100 duration-300"
+            aria-label="Scroll right"
+          >
+            <ChevronRight size={24} />
+          </button>
         </div>
       </div>
 
