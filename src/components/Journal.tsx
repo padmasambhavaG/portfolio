@@ -71,7 +71,7 @@ export default function Journal() {
             </p>
           </div>
           
-          <a href="resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex group relative items-center justify-center rounded-full text-sm px-6 py-3 border-2 border-stroke bg-transparent text-text-primary hover:border-transparent transition-all w-fit">
+          <a href="PadmaSambhava_Gopu.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex group relative items-center justify-center rounded-full text-sm px-6 py-3 border-2 border-stroke bg-transparent text-text-primary hover:border-transparent transition-all w-fit">
             <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
             <span className="absolute inset-[2px] bg-bg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
             <span className="flex items-center gap-2">View full resume <ArrowRight size={16} /></span>

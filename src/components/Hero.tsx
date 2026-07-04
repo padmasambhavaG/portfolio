@@ -19,7 +19,7 @@ const navLinks = [
 ];
 
 const quickLinks = [
-  { name: "Download Resume", icon: FileText, href: "resume.pdf", isExternal: true },
+  { name: "Download Resume", icon: FileText, href: "PadmaSambhava_Gopu.pdf", isExternal: true },
   { name: "GitHub Profile", icon: Code2, href: "https://github.com/padmasambhavaG", isExternal: true },
   { name: "LinkedIn", icon: Globe, href: "https://www.linkedin.com/in/padmasambhavagopu", isExternal: true }
 ];
@@ -294,8 +294,8 @@ export default function Hero() {
           
           <motion.a 
             whileTap={{ scale: 0.95 }}
-            href="resume.pdf"
-            download="Resume.pdf"
+            href="PadmaSambhava_Gopu.pdf"
+            download="PadmaSambhava_Gopu.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center justify-center rounded-full text-sm px-7 py-3.5 border-2 border-stroke bg-bg text-text-primary hover:border-transparent transition-colors hover:scale-105 duration-300"
