@@ -131,12 +131,12 @@ export default function Explorations() {
 
       {/* Horizontal Scrolling Tracks */}
       <div className="flex flex-col gap-6 md:gap-8 overflow-hidden w-full py-4 pointer-events-auto">
-        {/* Row 1: moves left */}
+        {/* Row 1: moves left (all 5 certificates) */}
         <div 
           ref={row1Ref} 
           className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
         >
-          {certifications.slice(0, 3).map((cert, i) => (
+          {certifications.map((cert, i) => (
             <button 
               onClick={() => handleSelectCert(cert)}
               key={`row1-${i}`}
@@ -160,12 +160,12 @@ export default function Explorations() {
           ))}
         </div>
 
-        {/* Row 2: moves right */}
+        {/* Row 2: moves right (all 5 certificates in reverse order) */}
         <div 
           ref={row2Ref} 
           className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
         >
-          {certifications.slice(3, 5).map((cert, i) => (
+          {[...certifications].reverse().map((cert, i) => (
             <button 
               onClick={() => handleSelectCert(cert)}
               key={`row2-${i}`}
