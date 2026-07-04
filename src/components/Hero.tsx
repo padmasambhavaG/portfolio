@@ -364,27 +364,27 @@ export default function Hero() {
           <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 p-4">
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/60 backdrop-blur-lg shadow-xl shadow-black/5 dark:shadow-black/20"
+              className="absolute inset-0 bg-black/75 backdrop-blur-md"
               onClick={closeSearch}
             />
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              className="relative w-full max-w-lg bg-white dark:bg-glass-10 backdrop-blur-2xl border border-stroke/30 dark:border-glass-20 rounded-3xl p-6 shadow-2xl overflow-hidden animate-role-fade-in"
+              className="relative w-full max-w-lg bg-[#121212]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden animate-role-fade-in text-white"
             >
-              <div className="flex items-center gap-3 pb-4 mb-4 border-b border-glass-10">
-                <Search size={20} className="text-muted" />
+              <div className="flex items-center gap-3 pb-4 mb-4 border-b border-white/10">
+                <Search size={20} className="text-white/40" />
                 <input 
                   type="text" 
                   placeholder="Quick Links..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-glass-5 border border-glass-10 outline-none text-text-primary w-full placeholder:text-muted/70 text-base px-4 py-2 rounded-xl focus:ring-2 focus:ring-[#89AACC]/50 focus:bg-glass-10 transition-all duration-300 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
+                  className="bg-white/5 border border-white/10 outline-none text-white w-full placeholder:text-white/40 text-base px-4 py-2 rounded-xl focus:ring-2 focus:ring-[#89AACC]/50 focus:bg-white/10 transition-all duration-300 shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)]"
                 />
                 <button 
                   onClick={closeSearch}
-                  className="w-8 h-8 shrink-0 rounded-full bg-glass-10 flex items-center justify-center hover:bg-glass-20 transition-colors"
+                  className="w-8 h-8 shrink-0 rounded-full bg-white/10 text-white/80 flex items-center justify-center hover:bg-white/20 hover:text-white transition-colors"
                 >
                   <X size={16} />
                 </button>
@@ -402,17 +402,17 @@ export default function Hero() {
                       onClick={() => {
                         closeSearch();
                       }}
-                      className="flex items-center gap-4 p-3 rounded-xl hover:bg-glass-10 transition-colors group"
+                      className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors group"
                     >
-                      <div className="w-10 h-10 rounded-full bg-glass-5 border border-glass-10 flex items-center justify-center group-hover:bg-text-primary group-hover:text-bg transition-all duration-300 group-hover:scale-110 shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 group-hover:scale-110 shadow-sm text-white/80">
                         <link.icon size={18} className="group-hover:animate-pulse" />
                       </div>
-                      <span className="flex-1 text-text-primary font-medium">{link.name}</span>
-                      {link.isExternal && <ExternalLink size={14} className="text-muted opacity-0 group-hover:opacity-100 transition-opacity" />}
+                      <span className="flex-1 text-white font-medium">{link.name}</span>
+                      {link.isExternal && <ExternalLink size={14} className="text-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />}
                     </a>
                   ))}
                 {quickLinks.filter((link) => link.name.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
-                  <div className="text-center py-8 text-muted text-sm italic">
+                  <div className="text-center py-8 text-white/40 text-sm italic">
                     No matching links found
                   </div>
                 )}
