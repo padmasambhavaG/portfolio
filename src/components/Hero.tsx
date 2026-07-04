@@ -371,7 +371,7 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.95, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              className="relative w-full max-w-lg bg-bg/95 dark:bg-glass-10 backdrop-blur-2xl border border-stroke/30 dark:border-glass-20 rounded-3xl p-6 shadow-2xl overflow-hidden animate-role-fade-in"
+              className="relative w-full max-w-lg bg-white dark:bg-glass-10 backdrop-blur-2xl border border-stroke/30 dark:border-glass-20 rounded-3xl p-6 shadow-2xl overflow-hidden animate-role-fade-in"
             >
               <div className="flex items-center gap-3 pb-4 mb-4 border-b border-glass-10">
                 <Search size={20} className="text-muted" />
