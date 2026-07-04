@@ -70,7 +70,7 @@
   }
 
   .stats-number-gradient-text {
-    background: linear-gradient(90deg, #ffffff 0%, #89AACC 100%);
+    background: var(--stats-number-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -101,6 +101,8 @@
     --color-glass-5: rgba(0, 0, 0, 0.05);
     --color-glass-10: rgba(0, 0, 0, 0.1);
     --color-glass-20: rgba(0, 0, 0, 0.2);
+
+    --stats-number-gradient: linear-gradient(90deg, var(--color-text-primary) 0%, #4E85BF 100%);
   }
 
   .dark {
@@ -116,6 +118,8 @@
     --color-glass-5: rgba(255, 255, 255, 0.05);
     --color-glass-10: rgba(255, 255, 255, 0.1);
     --color-glass-20: rgba(255, 255, 255, 0.2);
+
+    --stats-number-gradient: linear-gradient(90deg, #ffffff 0%, #89AACC 100%);
   }
 
   html {
