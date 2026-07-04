@@ -45,7 +45,8 @@ export default function Explorations() {
   const [selectedCert, setSelectedCert] = useState<typeof certifications[0] | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const topRowCerts = [
+  // Triple the array elements to allow endless looping in both directions
+  const baseTopRow = [
     certifications[4], // 5
     certifications[0], // 1
     certifications[1], // 2
@@ -53,13 +54,16 @@ export default function Explorations() {
     certifications[3]  // 4
   ];
 
-  const bottomRowCerts = [
+  const baseBottomRow = [
     certifications[2], // 3
     certifications[3], // 4
     certifications[4], // 5
     certifications[0], // 1
     certifications[1]  // 2
   ];
+
+  const topRowCerts = [...baseTopRow, ...baseTopRow, ...baseTopRow];
+  const bottomRowCerts = [...baseBottomRow, ...baseBottomRow, ...baseBottomRow];
 
   const handleSelectCert = (cert: typeof certifications[0] | null) => {
     setImageLoaded(false);
@@ -82,6 +86,58 @@ export default function Explorations() {
     }
   };
 
+  // Infinite manual scroll loop logic
+  const handleScrollLoop = (ref: React.RefObject<HTMLDivElement | null>) => {
+    return () => {
+      const container = ref.current;
+      if (!container) return;
+
+      const isMobile = window.innerWidth < 768;
+      const cardWidth = isMobile ? (240 + 16) : (380 + 24);
+      const totalWidthOneCopy = cardWidth * 5;
+
+      // If scrolled close to the start, wrap around to the middle copy
+      if (container.scrollLeft < cardWidth) {
+        container.scrollLeft += totalWidthOneCopy;
+      }
+      // If scrolled past the middle copy, wrap back to the middle copy
+      else if (container.scrollLeft >= totalWidthOneCopy * 2) {
+        container.scrollLeft -= totalWidthOneCopy;
+      }
+    };
+  };
+
+  // Center scroll position on the middle copy initially
+  useEffect(() => {
+    const r1 = row1ContainerRef.current;
+    const r2 = row2ContainerRef.current;
+    
+    const initScroll = () => {
+      const isMobile = window.innerWidth < 768;
+      const cardWidth = isMobile ? (240 + 16) : (380 + 24);
+      const middleOffset = cardWidth * 5;
+      if (r1) r1.scrollLeft = middleOffset;
+      if (r2) r2.scrollLeft = middleOffset;
+    };
+
+    initScroll();
+    
+    // Add scroll listeners for infinite looping
+    const listener1 = handleScrollLoop(row1ContainerRef);
+    const listener2 = handleScrollLoop(row2ContainerRef);
+
+    if (r1) r1.addEventListener('scroll', listener1);
+    if (r2) r2.addEventListener('scroll', listener2);
+
+    window.addEventListener('resize', initScroll);
+
+    return () => {
+      if (r1) r1.removeEventListener('scroll', listener1);
+      if (r2) r2.removeEventListener('scroll', listener2);
+      window.removeEventListener('resize', initScroll);
+    };
+  }, []);
+
   // Handle ESC key and lock body scroll while modal is active
   useEffect(() => {
     if (selectedCert) {
@@ -100,6 +156,7 @@ export default function Explorations() {
     }
   }, [selectedCert]);
 
+  // Page Scroll GSAP animation for parallax horizontal drift
   useEffect(() => {
     const ctx = gsap.context(() => {
       const container = containerRef.current;
@@ -108,7 +165,6 @@ export default function Explorations() {
       if (!container || !row1 || !row2) return;
 
       const isMobile = window.innerWidth < 768;
-      // Premium translation offsets on scroll
       const moveDistance = isMobile ? "-450px" : "-950px";
       const startOffset = isMobile ? "-450px" : "-950px";
 
