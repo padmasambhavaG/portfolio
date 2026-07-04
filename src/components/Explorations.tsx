@@ -41,6 +41,8 @@ export default function Explorations() {
   const contentRef = useRef<HTMLDivElement>(null);
   const col1Ref = useRef<HTMLDivElement>(null);
   const col2Ref = useRef<HTMLDivElement>(null);
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
   const [selectedCert, setSelectedCert] = useState<typeof certifications[0] | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -70,66 +72,103 @@ export default function Explorations() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const container = containerRef.current;
-      const content = contentRef.current;
-      const col1 = col1Ref.current;
-      const col2 = col2Ref.current;
+      if (!container) return;
 
-      if (!container || !content || !col1 || !col2) return;
+      const mm = gsap.matchMedia();
 
-      // Make the parallax translations responsive to prevent layout overlap on smaller viewports
-      const isMobile = window.innerWidth < 768;
-      const y1Val = isMobile ? "-12%" : "-30%";
-      const y2Val = isMobile ? "-25%" : "-60%";
-
-      // Pin the center content
-      ScrollTrigger.create({
-        trigger: container,
-        start: "top top",
-        end: "bottom bottom",
-        pin: content,
-        pinSpacing: false,
-      });
-
-      // Animate title from top to middle
-      const titleBox = container.querySelector('.cert-title-box');
-      if (titleBox) {
-        gsap.fromTo(titleBox,
-          { y: "-48vh", opacity: 0.3 },
-          {
-            y: "0px",
-            opacity: 1,
-            ease: "power1.out",
-            scrollTrigger: {
-              trigger: container,
-              start: "top bottom",
-              end: "top top",
-              scrub: true,
+      // Mobile Viewport (< 768px): scroll-linked horizontal rows
+      mm.add("(max-width: 767px)", () => {
+        const row1 = row1Ref.current;
+        const row2 = row2Ref.current;
+        if (row1 && row2) {
+          gsap.fromTo(row1,
+            { x: "0px" },
+            {
+              x: "-120px", // moves left on scroll down
+              ease: "none",
+              scrollTrigger: {
+                trigger: container,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              }
             }
-          }
-        );
-      }
+          );
 
-      // Parallax for columns
-      gsap.to(col1, {
-        y: y1Val,
-        ease: "none",
-        scrollTrigger: {
-          trigger: container,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
+          gsap.fromTo(row2,
+            { x: "-120px" }, // starts shifted left
+            {
+              x: "0px", // moves right on scroll down
+              ease: "none",
+              scrollTrigger: {
+                trigger: container,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              }
+            }
+          );
         }
       });
 
-      gsap.to(col2, {
-        y: y2Val,
-        ease: "none",
-        scrollTrigger: {
+      // Desktop Viewport (>= 768px): pinned center and parallax columns
+      mm.add("(min-width: 768px)", () => {
+        const content = contentRef.current;
+        const col1 = col1Ref.current;
+        const col2 = col2Ref.current;
+        const titleBox = container.querySelector('.cert-title-box');
+
+        if (!content || !col1 || !col2) return;
+
+        // Pin the center content
+        ScrollTrigger.create({
           trigger: container,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
+          start: "top top",
+          end: "bottom bottom",
+          pin: content,
+          pinSpacing: false,
+        });
+
+        // Animate title from top to middle
+        if (titleBox) {
+          gsap.fromTo(titleBox,
+            { y: "-48vh", opacity: 0.3 },
+            {
+              y: "0px",
+              opacity: 1,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: container,
+                start: "top bottom",
+                end: "top top",
+                scrub: true,
+              }
+            }
+          );
         }
+
+        // Parallax for columns
+        gsap.to(col1, {
+          y: "-30%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+
+        gsap.to(col2, {
+          y: "-60%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
       });
     }, containerRef);
 
@@ -139,66 +178,134 @@ export default function Explorations() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative min-h-[120vh] bg-bg overflow-hidden">
+    <section ref={containerRef} className="relative min-h-fit md:min-h-[120vh] bg-bg overflow-hidden">
       
-      {/* Layer 1: Pinned Center (Behind Cards) */}
-      <div 
-        ref={contentRef}
-        className="absolute top-0 left-0 w-full h-screen z-0 flex flex-col items-center justify-center pointer-events-none px-4"
-      >
-        <div className="cert-title-box bg-bg/80 backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 px-6 py-8 md:px-12 md:py-10 rounded-3xl border border-glass-5 text-text-primary text-center shadow-2xl pointer-events-auto max-w-2xl w-full">
-          <h2 className="text-4xl md:text-5xl lg:text-7xl text-text-primary tracking-tight mb-4">
-            <span className="font-display italic">Certifications</span>
+      {/* Mobile-Only Layout (scroll-linked horizontal rows) */}
+      <div className="block md:hidden py-16 px-6 pointer-events-auto relative z-10">
+        <div className="flex flex-col items-start gap-4 mb-10">
+          <div className="flex items-center gap-4">
+            <div className="w-8 h-px bg-stroke" />
+            <span className="text-xs text-muted uppercase tracking-[0.3em]">Credentials</span>
+          </div>
+          <h2 className="text-4xl text-text-primary tracking-tight">
+            Featured <span className="font-display italic">Certifications</span>
           </h2>
         </div>
-      </div>
 
-      {/* Layer 2: Parallax Columns (Above Text) */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-4 h-full pt-[22vh] pointer-events-none">
-        <div className="grid grid-cols-2 gap-4 md:gap-40 justify-items-center pointer-events-auto">
-          
-          {/* Column 1 */}
-          <div ref={col1Ref} className="flex flex-col gap-6 md:gap-16 mt-12 md:mt-24 w-full items-center">
+        <div className="flex flex-col gap-6 overflow-hidden -mx-6 py-4">
+          {/* Row 1: moves left */}
+          <div 
+            ref={row1Ref} 
+            className="flex gap-4 px-6 w-max transition-transform duration-300 will-change-transform"
+          >
             {certifications.slice(0, 3).map((cert, i) => (
               <button 
                 onClick={() => handleSelectCert(cert)}
-                key={`col1-${i}`}
-                className="group relative w-full max-w-[320px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/20 shadow-xl cursor-pointer hover:rotate-2 transition-all duration-500 block text-left"
+                key={`mob-row1-${i}`}
+                className="group relative w-[220px] aspect-square rounded-3xl overflow-hidden border border-glass-10 shadow-xl cursor-pointer block text-left shrink-0"
               >
                 <img 
                   src={cert.image} 
                   alt={cert.title} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover"
                   style={{ objectPosition: cert.position || 'center' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                  <span className="text-[10px] text-muted uppercase tracking-wider mb-1 font-mono">{cert.title}</span>
-                  <span className="font-display text-text-primary text-lg">View Certificate</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-4">
+                  <span className="text-[9px] text-white/70 uppercase tracking-wider mb-0.5 truncate font-mono">{cert.title}</span>
+                  <span className="font-display text-white text-base">View Certificate</span>
                 </div>
               </button>
             ))}
           </div>
 
-          {/* Column 2 */}
-          <div ref={col2Ref} className="flex flex-col gap-8 md:gap-16 mt-32 md:mt-48">
+          {/* Row 2: moves right */}
+          <div 
+            ref={row2Ref} 
+            className="flex gap-4 px-6 w-max transition-transform duration-300 will-change-transform"
+          >
             {certifications.slice(3, 5).map((cert, i) => (
               <button 
                 onClick={() => handleSelectCert(cert)}
-                key={`col2-${i}`}
-                className="group relative w-full max-w-[320px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/20 shadow-xl cursor-pointer hover:-rotate-2 transition-all duration-500 block text-left"
+                key={`mob-row2-${i}`}
+                className="group relative w-[220px] aspect-square rounded-3xl overflow-hidden border border-glass-10 shadow-xl cursor-pointer block text-left shrink-0"
               >
                 <img 
                   src={cert.image} 
                   alt={cert.title} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover"
                   style={{ objectPosition: cert.position || 'center' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                  <span className="text-[10px] text-muted uppercase tracking-wider mb-1 font-mono">{cert.title}</span>
-                  <span className="font-display text-text-primary text-lg">View Certificate</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-4">
+                  <span className="text-[9px] text-white/70 uppercase tracking-wider mb-0.5 truncate font-mono">{cert.title}</span>
+                  <span className="font-display text-white text-base">View Certificate</span>
                 </div>
               </button>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop-Only Layout (gsap pinned/parallax vertical columns) */}
+      <div className="hidden md:block">
+        {/* Layer 1: Pinned Center (Behind Cards) */}
+        <div 
+          ref={contentRef}
+          className="absolute top-0 left-0 w-full h-screen z-0 flex flex-col items-center justify-center pointer-events-none px-4"
+        >
+          <div className="cert-title-box bg-bg/80 backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 px-6 py-8 md:px-12 md:py-10 rounded-3xl border border-glass-5 text-text-primary text-center shadow-2xl pointer-events-auto max-w-2xl w-full">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl text-text-primary tracking-tight mb-4">
+              <span className="font-display italic">Certifications</span>
+            </h2>
+          </div>
+        </div>
+
+        {/* Layer 2: Parallax Columns (Above Text) */}
+        <div className="relative z-10 max-w-[1400px] mx-auto px-4 h-full pt-[22vh] pointer-events-none">
+          <div className="grid grid-cols-2 gap-4 md:gap-40 justify-items-center pointer-events-auto">
+            
+            {/* Column 1 */}
+            <div ref={col1Ref} className="flex flex-col gap-6 md:gap-16 mt-12 md:mt-24 w-full items-center">
+              {certifications.slice(0, 3).map((cert, i) => (
+                <button 
+                  onClick={() => handleSelectCert(cert)}
+                  key={`col1-${i}`}
+                  className="group relative w-full max-w-[320px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/20 shadow-xl cursor-pointer hover:rotate-2 transition-all duration-500 block text-left"
+                >
+                  <img 
+                    src={cert.image} 
+                    alt={cert.title} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    style={{ objectPosition: cert.position || 'center' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                    <span className="text-[10px] text-muted uppercase tracking-wider mb-1 font-mono">{cert.title}</span>
+                    <span className="font-display text-text-primary text-lg">View Certificate</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Column 2 */}
+            <div ref={col2Ref} className="flex flex-col gap-8 md:gap-16 mt-32 md:mt-48">
+              {certifications.slice(3, 5).map((cert, i) => (
+                <button 
+                  onClick={() => handleSelectCert(cert)}
+                  key={`col2-${i}`}
+                  className="group relative w-full max-w-[320px] aspect-square rounded-3xl overflow-hidden border border-glass-10 dark:border-white/20 shadow-xl cursor-pointer hover:-rotate-2 transition-all duration-500 block text-left"
+                >
+                  <img 
+                    src={cert.image} 
+                    alt={cert.title} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    style={{ objectPosition: cert.position || 'center' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                    <span className="text-[10px] text-muted uppercase tracking-wider mb-1 font-mono">{cert.title}</span>
+                    <span className="font-display text-text-primary text-lg">View Certificate</span>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
