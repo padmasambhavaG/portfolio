@@ -227,7 +227,7 @@ export default function Explorations() {
           {/* Scroll Left Button */}
           <button 
             onClick={() => scrollRow1('left')}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row1:opacity-100 duration-300"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white hidden md:flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer md:opacity-0 md:group-hover/row1:opacity-100 duration-300"
             aria-label="Scroll left"
           >
             <ChevronLeft size={24} />
@@ -269,7 +269,7 @@ export default function Explorations() {
           {/* Scroll Right Button */}
           <button 
             onClick={() => scrollRow1('right')}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row1:opacity-100 duration-300"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white hidden md:flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer md:opacity-0 md:group-hover/row1:opacity-100 duration-300"
             aria-label="Scroll right"
           >
             <ChevronRight size={24} />
@@ -281,7 +281,7 @@ export default function Explorations() {
           {/* Scroll Left Button */}
           <button 
             onClick={() => scrollRow2('left')}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row2:opacity-100 duration-300"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white hidden md:flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer md:opacity-0 md:group-hover/row2:opacity-100 duration-300"
             aria-label="Scroll left"
           >
             <ChevronLeft size={24} />
@@ -323,7 +323,7 @@ export default function Explorations() {
           {/* Scroll Right Button */}
           <button 
             onClick={() => scrollRow2('right')}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer opacity-100 md:opacity-0 md:group-hover/row2:opacity-100 duration-300"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white hidden md:flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-lg cursor-pointer md:opacity-0 md:group-hover/row2:opacity-100 duration-300"
             aria-label="Scroll right"
           >
             <ChevronRight size={24} />
