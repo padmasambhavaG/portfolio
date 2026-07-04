@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { ArrowRight, Code2, ExternalLink, X } from 'lucide-react';
+import { Code2, ExternalLink, X } from 'lucide-react';
 
 type Project = {
   id: string;
@@ -41,8 +41,6 @@ const projects: Project[] = [
     colSpan: "md:col-span-6 min-h-[350px] lg:min-h-[450px]"
   }
 ];
-
-const categories = ["All", "Fullstack", "Frontend"];
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -90,12 +88,7 @@ function ImageWithSkeleton({ src, alt, layoutId, className }: { src: string, alt
 }
 
 export default function SelectedWorks() {
-  const [activeFilter, setActiveFilter] = useState("All");
   const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  const filteredProjects = projects.filter(p => 
-    activeFilter === "All" ? true : p.category === activeFilter
-  );
 
   const selectedProject = projects.find(p => p.id === selectedId);
 
@@ -118,40 +111,15 @@ export default function SelectedWorks() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
+          className="mb-12"
         >
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-8 h-px bg-stroke" />
-              <span className="text-xs text-muted uppercase tracking-[0.3em]">Selected Work</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-text-primary tracking-tight mb-6">
-              Featured <span className="font-display italic">projects</span>
-            </h2>
-            
-            {/* Filter Bar */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setActiveFilter(category)}
-                  className={`px-5 py-2 rounded-full text-sm transition-all whitespace-nowrap ${
-                    activeFilter === category 
-                      ? 'bg-text-primary text-bg' 
-                      : 'bg-surface border border-stroke text-muted hover:text-text-primary hover:border-stroke/80'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-8 h-px bg-stroke" />
+            <span className="text-xs text-muted uppercase tracking-[0.3em]">Selected Work</span>
           </div>
-          
-          <button className="inline-flex group relative items-center justify-center rounded-full text-sm px-6 py-3 border-2 border-stroke bg-transparent text-text-primary hover:border-transparent transition-all w-fit">
-            <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
-            <span className="absolute inset-[2px] bg-bg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
-            <span className="flex items-center gap-2">View all work <ArrowRight size={16} /></span>
-          </button>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-text-primary tracking-tight">
+            Featured <span className="font-display italic">projects</span>
+          </h2>
         </motion.div>
 
         {/* Masonry Bento Grid */}
@@ -163,7 +131,7 @@ export default function SelectedWorks() {
           className="grid grid-cols-1 md:grid-cols-12 auto-rows-min gap-5 md:gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
+            {projects.map((project) => (
               <motion.div
                 layoutId={`card-${project.id}`}
                 key={project.id}
