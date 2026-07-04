@@ -323,33 +323,33 @@ export default function Hero() {
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/60 backdrop-blur-lg shadow-xl shadow-black/5 dark:shadow-black/20"
+              className="absolute inset-0 bg-black/75 backdrop-blur-md"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-sm bg-glass-10 backdrop-blur-2xl border border-glass-20 rounded-3xl p-6 shadow-2xl overflow-hidden"
+              className="relative w-full max-w-sm bg-[#121212]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden text-white"
             >
               <button 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-glass-10 flex items-center justify-center hover:bg-glass-20 transition-colors"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 text-white/80 flex items-center justify-center hover:bg-white/20 hover:text-white transition-colors"
               >
                 <X size={16} />
               </button>
               
-              <h3 className="text-xl font-display italic text-text-primary mb-6">Navigation</h3>
+              <h3 className="text-xl font-display italic text-white mb-6">Navigation</h3>
               <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
                   <a
                     key={link.id}
                     href={`#${link.id}`}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between p-4 rounded-xl hover:bg-glass-10 transition-colors text-text-primary"
+                    className="flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors text-white/80 hover:text-white"
                   >
                     <span className="text-lg">{link.name}</span>
-                    <ArrowUpRight size={16} className="opacity-50" />
+                    <ArrowUpRight size={16} className="text-white/40" />
                   </a>
                 ))}
               </div>
