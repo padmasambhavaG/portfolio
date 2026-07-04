@@ -40,6 +40,8 @@ export default function Explorations() {
   const containerRef = useRef<HTMLDivElement>(null);
   const row1ContainerRef = useRef<HTMLDivElement>(null);
   const row2ContainerRef = useRef<HTMLDivElement>(null);
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
   const [selectedCert, setSelectedCert] = useState<typeof certifications[0] | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -101,20 +103,20 @@ export default function Explorations() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const container = containerRef.current;
-      const row1Container = row1ContainerRef.current;
-      const row2Container = row2ContainerRef.current;
-      if (!container || !row1Container || !row2Container) return;
+      const row1 = row1Ref.current;
+      const row2 = row2Ref.current;
+      if (!container || !row1 || !row2) return;
 
       const isMobile = window.innerWidth < 768;
-      // Snappy translation offsets on scroll
-      const moveDistance = isMobile ? 320 : 800;
-      const startOffset = isMobile ? 320 : 800;
+      // Premium translation offsets on scroll
+      const moveDistance = isMobile ? "-450px" : "-950px";
+      const startOffset = isMobile ? "-450px" : "-950px";
 
-      // Row 1: moves left on scroll down (animating scrollLeft from 0 to moveDistance)
-      gsap.fromTo(row1Container,
-        { scrollLeft: 0 },
+      // Row 1: moves left on scroll down (translating inner track directly)
+      gsap.fromTo(row1,
+        { x: "0px" },
         {
-          scrollLeft: moveDistance,
+          x: moveDistance,
           ease: "none",
           scrollTrigger: {
             trigger: container,
@@ -125,11 +127,11 @@ export default function Explorations() {
         }
       );
 
-      // Row 2: moves right on scroll down (animating scrollLeft from startOffset to 0)
-      gsap.fromTo(row2Container,
-        { scrollLeft: startOffset },
+      // Row 2: moves right on scroll down (translating inner track directly)
+      gsap.fromTo(row2,
+        { x: startOffset },
         {
-          scrollLeft: 0,
+          x: "0px",
           ease: "none",
           scrollTrigger: {
             trigger: container,
@@ -179,7 +181,10 @@ export default function Explorations() {
             ref={row1ContainerRef}
             className="overflow-x-auto no-scrollbar scroll-smooth w-full"
           >
-            <div className="flex gap-4 md:gap-6 px-6 md:px-16 w-max">
+            <div 
+              ref={row1Ref}
+              className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
+            >
               {topRowCerts.map((cert, i) => (
                 <button 
                   onClick={() => handleSelectCert(cert)}
@@ -230,7 +235,10 @@ export default function Explorations() {
             ref={row2ContainerRef}
             className="overflow-x-auto no-scrollbar scroll-smooth w-full"
           >
-            <div className="flex gap-4 md:gap-6 px-6 md:px-16 w-max">
+            <div 
+              ref={row2Ref}
+              className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
+            >
               {bottomRowCerts.map((cert, i) => (
                 <button 
                   onClick={() => handleSelectCert(cert)}
