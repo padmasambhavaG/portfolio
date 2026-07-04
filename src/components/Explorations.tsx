@@ -91,8 +91,8 @@ export default function Explorations() {
 
       const isMobile = window.innerWidth < 768;
       // Faster, more pronounced translations
-      const moveDistance = isMobile ? "-280px" : "-650px";
-      const startOffset = isMobile ? "-280px" : "-650px";
+      const moveDistance = isMobile ? "-450px" : "-950px";
+      const startOffset = isMobile ? "-450px" : "-950px";
 
       // Row 1: moves to the left as user scrolls down
       gsap.fromTo(row1,
