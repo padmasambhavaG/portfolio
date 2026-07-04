@@ -208,7 +208,7 @@ export default function SelectedWorks() {
             {/* Modal Content */}
             <motion.div 
               layoutId={`card-${selectedProject.id}`}
-              className="relative w-full max-w-[1000px] h-[90vh] md:h-[80vh] bg-glass-5 backdrop-blur-3xl border border-glass-10 rounded-[2rem] overflow-hidden flex flex-col pointer-events-auto shadow-[0_0_80px_rgba(255,255,255,0.15)]"
+              className="relative w-full max-w-[1000px] h-[90vh] md:h-[80vh] bg-bg dark:bg-zinc-950 border border-stroke dark:border-white/10 rounded-[2rem] overflow-hidden flex flex-col pointer-events-auto shadow-[0_0_80px_rgba(0,0,0,0.15)] dark:shadow-[0_0_80px_rgba(255,255,255,0.1)]"
             >
               {/* Close Button with expanded tap target */}
               <button 
