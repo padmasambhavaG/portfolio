@@ -208,12 +208,12 @@ export default function SelectedWorks() {
             {/* Modal Content */}
             <motion.div 
               layoutId={`card-${selectedProject.id}`}
-              className="relative w-full max-w-[1000px] h-[90vh] md:h-[80vh] bg-bg dark:bg-zinc-950 border border-stroke dark:border-white/10 rounded-[2rem] overflow-hidden flex flex-col pointer-events-auto shadow-[0_0_80px_rgba(0,0,0,0.15)] dark:shadow-[0_0_80px_rgba(255,255,255,0.1)]"
+              className="relative w-full max-w-[1000px] h-[90vh] md:h-[80vh] bg-[#121212]/95 backdrop-blur-3xl border border-white/10 rounded-[2rem] overflow-hidden flex flex-col pointer-events-auto shadow-2xl text-white"
             >
               {/* Close Button with expanded tap target */}
               <button 
                 onClick={() => setSelectedId(null)}
-                className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-white hover:text-black transition-colors backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 border border-glass-20 before:absolute before:-inset-3 cursor-pointer"
+                className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-white/10 text-white/80 flex items-center justify-center hover:bg-white hover:text-black transition-colors backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 border border-white/10 before:absolute before:-inset-3 cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -226,30 +226,30 @@ export default function SelectedWorks() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-6 left-6 flex items-center gap-4 z-10">
-                   <span className="text-xs px-4 py-2 rounded-full border border-glass-20 bg-black/40 text-white backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 font-medium tracking-wide">
+                   <span className="text-xs px-4 py-2 rounded-full border border-white/10 bg-black/60 text-white backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 font-medium tracking-wide">
                     {selectedProject.category}
                   </span>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent" />
               </div>
 
               <div className="p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-10 overflow-y-auto relative z-10 overscroll-contain">
                 <div className="flex-1">
                   <motion.div layoutId={`title-container-${selectedProject.id}`}>
-                    <h2 className="text-4xl md:text-5xl font-display italic text-text-primary mb-6">{selectedProject.title}</h2>
+                    <h2 className="text-4xl md:text-5xl font-display italic text-white mb-6">{selectedProject.title}</h2>
                   </motion.div>
-                  <p className="text-muted text-base md:text-lg leading-relaxed mb-8">
+                  <p className="text-white/80 text-base md:text-lg leading-relaxed mb-8">
                     {selectedProject.longDescription}
                   </p>
                   
                   <div className="flex flex-wrap gap-4 mt-auto">
                     {selectedProject.liveUrl && (
-                      <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 bg-text-primary text-bg rounded-full text-sm hover:scale-105 transition-transform">
+                      <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 bg-[#4E85BF] text-white hover:bg-[#4E85BF]/90 rounded-full text-sm hover:scale-105 transition-transform font-medium">
                         <ExternalLink size={16} /> Live Preview
                       </a>
                     )}
                     {selectedProject.githubUrl && (
-                      <a href={selectedProject.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 border border-stroke bg-transparent text-text-primary hover:bg-stroke/50 rounded-full text-sm hover:scale-105 transition-all">
+                      <a href={selectedProject.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white text-black hover:bg-white/90 rounded-full text-sm hover:scale-105 transition-all font-medium">
                         <Code2 size={16} /> Source Code
                       </a>
                     )}
@@ -257,19 +257,17 @@ export default function SelectedWorks() {
                 </div>
                 
                 <div className="w-full md:w-[300px] shrink-0">
-                  <h4 className="text-text-primary font-medium mb-4 flex items-center gap-2">
-                    <div className="w-4 h-px bg-stroke" />
+                  <h4 className="text-white font-medium mb-4 flex items-center gap-2">
+                    <div className="w-4 h-px bg-white/20" />
                     Tech Stack
                   </h4>
                   <div className="flex flex-wrap gap-2 mb-8">
                     {selectedProject.techStack.map(tech => (
-                      <span key={tech} className="text-xs px-3 py-1.5 rounded-full border border-stroke bg-bg text-muted">
+                      <span key={tech} className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-white/80">
                         {tech}
                       </span>
                     ))}
                   </div>
-
-
                 </div>
               </div>
             </motion.div>
