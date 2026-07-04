@@ -178,7 +178,7 @@ function HeatmapGraph({ variant }: { variant: 'github' | 'leetcode' }) {
 
   return (
     <div className="w-full overflow-hidden flex flex-col justify-end" ref={ref}>
-      <div className="flex items-end justify-center md:justify-start gap-[3px] sm:gap-1 overflow-x-auto pb-2 custom-scrollbar">
+      <div className="flex items-end justify-between w-full gap-[2px] overflow-x-auto pb-2 custom-scrollbar">
         {matrix.map((col, cIdx) => (
           <div key={cIdx} className="flex flex-col gap-[3px] sm:gap-1 shrink-0">
             {col.map((level, rIdx) => (
