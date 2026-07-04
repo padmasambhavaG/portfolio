@@ -140,10 +140,6 @@ export default function ContactFooter() {
                 <span className="accent-gradient-text">P </span>rodi<span className="accent-gradient-text">G</span>ious.
               </h2>
 
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-glass-5 border border-glass-10 mb-8 w-fit text-sm text-muted">
-                <Clock size={16} className="text-[#89AACC]" />
-                Usually responds within 24 hours
-              </div>
 
               <div className="flex flex-wrap items-center gap-4 w-full">
                 {/* Email Link */}
@@ -211,6 +207,11 @@ export default function ContactFooter() {
                     <>Send Message <ArrowRight size={18} /></>
                   )}
                 </button>
+
+                <div className="flex items-center justify-center gap-2 mt-2 text-xs text-muted">
+                  <Clock size={14} className="text-[#89AACC]" />
+                  <span>Usually responds within 24 hours</span>
+                </div>
               </form>
             </div>
 

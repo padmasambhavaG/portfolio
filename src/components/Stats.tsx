@@ -103,10 +103,13 @@ function HeatmapGraph({ variant }: { variant: 'github' | 'leetcode' }) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 480) {
-        setCols(16);
-      } else if (window.innerWidth < 640) {
+      const width = window.innerWidth;
+      if (width < 380) {
+        setCols(20);
+      } else if (width < 480) {
         setCols(24);
+      } else if (width < 640) {
+        setCols(28);
       } else {
         setCols(35);
       }
@@ -175,7 +178,7 @@ function HeatmapGraph({ variant }: { variant: 'github' | 'leetcode' }) {
 
   return (
     <div className="w-full overflow-hidden flex flex-col justify-end" ref={ref}>
-      <div className="flex items-end gap-[3px] sm:gap-1 overflow-x-auto pb-2 custom-scrollbar">
+      <div className="flex items-end justify-center md:justify-start gap-[3px] sm:gap-1 overflow-x-auto pb-2 custom-scrollbar">
         {matrix.map((col, cIdx) => (
           <div key={cIdx} className="flex flex-col gap-[3px] sm:gap-1 shrink-0">
             {col.map((level, rIdx) => (
