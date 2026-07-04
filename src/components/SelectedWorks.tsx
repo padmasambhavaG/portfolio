@@ -213,7 +213,7 @@ export default function SelectedWorks() {
               {/* Close Button with expanded tap target */}
               <button 
                 onClick={() => setSelectedId(null)}
-                className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-white/10 text-white/80 flex items-center justify-center hover:bg-white hover:text-black transition-colors backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 border border-white/10 before:absolute before:-inset-3 cursor-pointer"
+                className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-white/80 transition-colors backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 border border-white/10 before:absolute before:-inset-3 cursor-pointer"
               >
                 <X size={20} />
               </button>
