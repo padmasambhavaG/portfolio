@@ -43,6 +43,22 @@ export default function Explorations() {
   const [selectedCert, setSelectedCert] = useState<typeof certifications[0] | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  const topRowCerts = [
+    certifications[4], // 5
+    certifications[0], // 1
+    certifications[1], // 2
+    certifications[2], // 3
+    certifications[3]  // 4
+  ];
+
+  const bottomRowCerts = [
+    certifications[2], // 3
+    certifications[3], // 4
+    certifications[4], // 5
+    certifications[0], // 1
+    certifications[1]  // 2
+  ];
+
   const handleSelectCert = (cert: typeof certifications[0] | null) => {
     setImageLoaded(false);
     setSelectedCert(cert);
@@ -131,12 +147,12 @@ export default function Explorations() {
 
       {/* Horizontal Scrolling Tracks */}
       <div className="flex flex-col gap-6 md:gap-8 overflow-hidden w-full py-4 pointer-events-auto">
-        {/* Row 1: moves left (all 5 certificates) */}
+        {/* Row 1: moves left (certificates in order 5, 1, 2, 3, 4) */}
         <div 
           ref={row1Ref} 
           className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
         >
-          {certifications.map((cert, i) => (
+          {topRowCerts.map((cert, i) => (
             <button 
               onClick={() => handleSelectCert(cert)}
               key={`row1-${i}`}
@@ -160,12 +176,12 @@ export default function Explorations() {
           ))}
         </div>
 
-        {/* Row 2: moves right (all 5 certificates in reverse order) */}
+        {/* Row 2: moves right (certificates in order 3, 4, 5, 1, 2) */}
         <div 
           ref={row2Ref} 
           className="flex gap-4 md:gap-6 px-6 md:px-16 w-max transition-transform duration-100 will-change-transform"
         >
-          {[...certifications].reverse().map((cert, i) => (
+          {bottomRowCerts.map((cert, i) => (
             <button 
               onClick={() => handleSelectCert(cert)}
               key={`row2-${i}`}
