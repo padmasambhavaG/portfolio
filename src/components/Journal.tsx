@@ -103,7 +103,7 @@ export default function Journal() {
                   <img 
                     src={entry.image} 
                     alt={entry.title}
-                    className="w-full h-full object-cover transition-all duration-500 grayscale group-hover:grayscale-0 md:group-hover:scale-105"
+                    className="w-full h-full object-cover transition-all duration-500 md:grayscale md:group-hover:grayscale-0 md:group-hover:scale-105"
                   />
                 </div>
                 
